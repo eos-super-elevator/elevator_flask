@@ -7,7 +7,7 @@ verify_ssl = true
 
 [packages]
 flask = "*"
-adafruit-lcd1602 = "*"
+adafruit-gpio = "*"
 
 [requires]
 python_version = "3"
