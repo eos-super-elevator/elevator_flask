@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Client</title>
+</head>
+
+<body>
+  <h1>I'm a client bicth</h1>
+
+
+  <p>Responses</p>
+
+  <ul id="responses">
+
+  </ul>
+
+
+  <script type="text/javascript" src="socket.io.min.js"></script>
+  <script type="text/javascript" charset="utf-8">
+    const list = document.getElementById('responses')
+
+    const socket = io.connect('http://localhost:5000');
+    socket.on('connect', function() {
+      socket.emit('my event', {
+        data: 'I\'m connected!'
+      })
+
+      window.setInterval(function() {
+        socket.emit('my event', {
+          data: 'I\'m up!'
+        })
+      }, 2000)
+
+      socket.on('chat', function(msg) {
+        let item = document.createElement('li')
+        var itemText = document.createTextNode(msg)
+        item.appendChild(itemText)
+        list.appendChild(item)
+      })
+
+    })
+  </script>
+</body>
+
+</html>
