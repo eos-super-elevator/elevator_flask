@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, Response
 from components.LCD.I2CLCD1602 import display
 
 
@@ -6,11 +6,15 @@ app = Flask(__name__)
 
 @app.route("/")
 def hello():
-    return """An Python Flask web server to master some Raspberry PI components. This server expose some routes:
+    content = """<h1>Elevator web server</h1>
+    <p>An Python Flask web server to master some Raspberry PI components. This server expose some routes:</p>
 
-    - GET `/lcd/display/<content>`
-    - GET `/led/blink`
+    <ul> 
+      <li>GET `/lcd/display/<content>`</li>
+      <li>GET `/led/blink`</li>
+    </ul> 
     """
+    return Response(content, mimetype='text/html')
 
 @app.route('/lcd/display/<content>')
 def display_lcd(content):
