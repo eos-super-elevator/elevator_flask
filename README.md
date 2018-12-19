@@ -1,6 +1,6 @@
 # Python Elevator Server
 
-An Python Flask web server to master some Raspberry PI components. This server expose some routes:
+A Python Flask web server to master some Raspberry PI components. This server expose some routes:
 
 - GET `/lcd/display/<content>`
 - GET `/led/blink`
@@ -18,7 +18,7 @@ We use [this kit][freenove_kit] to build the complete system. We use only:
     $ pipenv instal
     $ pipenv run pip3 flask run
 
-This will start a production server on <localhost:5000>
+This will start a production server on <http://localhost:5000>
 
 
 [freenove_kit]: https://www.amazon.fr/Freenove-Raspberry-Processing-Tutorials-Components/dp/B06W54L7B5
