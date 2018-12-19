@@ -1,5 +1,7 @@
 from flask import Flask
 from components.LCD.I2CLCD1602 import display
+
+
 app = Flask(__name__)
 
 @app.route("/")
