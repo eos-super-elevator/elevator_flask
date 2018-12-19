@@ -9,6 +9,8 @@ verify_ssl = true
 flask = "*"
 adafruit-gpio = "*"
 smbus2 = "*"
+flask-socketio = "*"
+gevent = "*"
 
 [requires]
 python_version = "3"
