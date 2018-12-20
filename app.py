@@ -56,16 +56,13 @@ def run_sonar(time):
       return "finished"
 
 @socketio.on('sonar')
-def get_sonar():
+def get_sonar(data):
     """Get distance on sonar & return it on `sonar` socket channel
     """
     distance = get_distance()
     emit('sonar', (distance), broadcast=True, namespace="/")
     print('sonar mesured this distance: %.5f' % distance)
 
-@socketio.on('message')
-def get_sonar(message):
-  print('received message: ' + message)
 
 @socketio.on('message')
 def handle_message(message):
