@@ -2,7 +2,6 @@
 
 A Python Flask web server to master some Raspberry PI components. This server expose some routes:
 
-
 - GET `/lcd/display/<content>` to display a message on the LCD screen
 - GET `/led/blink` to make LED blink
 - GET `/sonar/run/<int:time>` to get distance on sonar during some time (response on "sonar" socket)
@@ -17,12 +16,9 @@ We use [this kit][freenove_kit] to build the complete system. We use only:
 
 - I2C LCD 1602 for display
 
-## Instalation
+## Run
 
-[Install Pipenv](https://pipenv.readthedocs.io/en/latest/install/#installing-pipenv) then:
-
-    $ pipenv instal
-    $ pipenv run pip3 flask run
+    FLASK_APP=app.py flask run --host=0.0.0.0
 
 This will start a production server on <http://localhost:5000>
 
