@@ -44,34 +44,32 @@ def blink_led():
     # TODO
     pass
 
-
-@socketio.on('sonar')
+@app.route('/sonar/run/<int:time>')
 def run_sonar(time):
-    """Simply read content from URI & display message on LCD screen
+    """Get distance on sonar during a given duration & return it on `sonar`
+    socket channel
 
     time parameter is the number of seconds to get distance (each seconds)
+    """
+    for distance in loop_during(time):
+      emit('sonar', (distance), broadcast=True, namespace="/")
+      return "finished"
+
+@socketio.on('sonar')
+def get_sonar():
+    """Get distance on sonar & return it on `sonar` socket channel
     """
     distance = get_distance()
     emit('sonar', (distance), broadcast=True, namespace="/")
     print('sonar mesured this distance: %.5f' % distance)
 
-
 @socketio.on('message')
 def get_sonar(message):
   print('received message: ' + message)
 
-
 @socketio.on('message')
 def handle_message(message):
   print('received message: ' + message)
-
-@socketio.on('message')
-def handle_message(message):
-  print('received message: ' + message)
-
-@socketio.on('my event')
-def handle_my_custom_event(json):
-  print('received json: ' + str(json))
 
 if __name__ == '__main__':
   socketio.run(app)
