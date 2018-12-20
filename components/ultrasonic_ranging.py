@@ -34,7 +34,6 @@ def getSonar():     #get the measurement results of ultrasonic module,with unit:
     return distance
 
 def setup():
-    print ('Program is starting...')
     GPIO.setmode(GPIO.BOARD)       #numbers GPIOs by physical location
     GPIO.setup(trigPin, GPIO.OUT)   #
     GPIO.setup(echoPin, GPIO.IN)    #
@@ -47,6 +46,7 @@ def loop():
         time.sleep(1)
 
 if __name__ == '__main__':     #program start from here
+    print ('Program is starting...')
     setup()
     try:
         loop()
@@ -56,14 +56,16 @@ if __name__ == '__main__':     #program start from here
 # CUSTOM AREA
 # -----------
 
-def loop_during(time, interval=1):
+def loop_during(looptime, interval=1):
     """ Get sonar value during some time
 
     - `time` is exprimed in seconds
     - `interval` is interval between each values exprimed in seconds
     """
+    setup()
     GPIO.setup(11,GPIO.IN)
-    while(time > 0):
+    while(looptime > 0):
         yield getSonar()
-        time = time - interval
+        looptime = looptime - interval
         time.sleep(interval)
+    GPIO.cleanup()

@@ -1,11 +1,15 @@
 from flask import Flask, Response
 from flask_socketio import SocketIO, send, emit
+from flask_cors import CORS
 
 from components.LCD.I2CLCD1602 import display
 from components.ultrasonic_ranging import loop_during
 
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = 'secret!'
+cors = CORS(app,resources={r"/socket.io/*":{"origins":"*"}})
+socketio = SocketIO(app)
 
 @app.route("/")
 def hello():
@@ -36,12 +40,11 @@ def blink_led():
 
 
 @app.route('/sonar/run/<int:time>')
-def run_sonar(content):
+def run_sonar(time):
     """Simply read content from URI & display message on LCD screen
     """
-    for i in loop_during(time):
-        display(content)
-        emit('sonar', )
+    for distance in loop_during(time):
+        emit('sonar', (distance), broadcast=True, namespace="/")
     return "finished"
 
 
@@ -49,9 +52,13 @@ def run_sonar(content):
 def handle_message(message):
   print('received message: ' + message)
 
-
+@socketio.on('message')
+def handle_message(message):
+  print('received message: ' + message)
 
 @socketio.on('my event')
 def handle_my_custom_event(json):
   print('received json: ' + str(json))
-  emit('chat', secrets.token_hex(nbytes=8))
+
+if __name__ == '__main__':
+  socketio.run(app)
