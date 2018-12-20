@@ -53,7 +53,7 @@ def run_sonar(time):
     """
     distance = get_distance()
     emit('sonar', (distance), broadcast=True, namespace="/")
-    print('sonar mesured this distance: ' + message)
+    print('sonar mesured this distance: %.5f' % distance)
 
 
 @socketio.on('message')
