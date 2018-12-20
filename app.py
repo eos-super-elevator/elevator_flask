@@ -3,7 +3,7 @@ from flask_socketio import SocketIO, send, emit
 from flask_cors import CORS
 
 from components.LCD.I2CLCD1602 import display
-from components.ultrasonic_ranging import loop_during
+from components.ultrasonic_ranging import loop_during, get_distance
 
 
 app = Flask(__name__)
@@ -17,9 +17,15 @@ def hello():
     <p>An Python Flask web server to master some Raspberry PI components. This server expose some routes:</p>
 
     <ul>
-      <li>GET <a href="/lcd/display/helloworld">/lcd/display/<content></a></li>
-      <li>GET <a href="/led/blink">/led/blink</a></li>
-      <li>GET <a href="/sonar/run">/sonar/run/<int:time></a></li>
+      <li>GET <a href="/lcd/display/helloworld">/lcd/display/<content></a> to display a message on the LCD screen</li>
+      <li>GET <a href="/led/blink">/led/blink</a> to make LED blink</li>
+      <li>GET <a href="/sonar/run">/sonar/run/<int:time></a> to get distnace on sonar during some time (response on "sonar" socket)</li>
+    </ul>
+
+    <p>You can also make theses SOCKET queries</p>
+
+    <ul>
+        <li><code></code></li>
     </ul>
     """
     return Response(content, mimetype='text/html')
@@ -39,13 +45,20 @@ def blink_led():
     pass
 
 
-@app.route('/sonar/run/<int:time>')
+@socketio.on('sonar')
 def run_sonar(time):
     """Simply read content from URI & display message on LCD screen
+
+    time parameter is the number of seconds to get distance (each seconds)
     """
-    for distance in loop_during(time):
-        emit('sonar', (distance), broadcast=True, namespace="/")
-    return "finished"
+    distance = get_distance()
+    emit('sonar', (distance), broadcast=True, namespace="/")
+    print('sonar mesured this distance: ' + message)
+
+
+@socketio.on('message')
+def get_sonar(message):
+  print('received message: ' + message)
 
 
 @socketio.on('message')

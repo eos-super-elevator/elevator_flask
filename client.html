@@ -11,36 +11,39 @@
 
   <p>This is just a test to open and read sonar socket</p>
 
+  <p>
+    <button id="ask" type="button" name="button">ask distance</button>
+  </p>
 
   <h2>Responses</h2>
 
   <ul id="responses"></ul>
 
 
-  <script type="text/javascript" src="socket.io.min.js"></script>
+  <script type="text/javascript" src="socket_test/socket.io.min.js"></script>
   <script type="text/javascript" charset="utf-8">
     const list = document.getElementById('responses')
 
-    const socket = io.connect('http://localhost:5000');
+    const socket = io.connect('http://192.168.43.74:5000')
+
+    function addList(text) {
+      let item = document.createElement('li')
+      var itemText = document.createTextNode(msg)
+      item.appendChild(itemText)
+      list.appendChild(item)
+    }
+
     socket.on('connect', function() {
       socket.emit('my event', {
         data: 'I\'m connected!'
       })
 
-      window.setInterval(function() {
-        socket.emit('my event', {
-          data: 'I\'m up!'
-        })
-      }, 2000)
-
-      socket.on('chat', function(msg) {
-        let item = document.createElement('li')
-        var itemText = document.createTextNode(msg)
-        item.appendChild(itemText)
-        list.appendChild(item)
-      })
-
+      socket.on('sonar', (msg) => addList(msg))
     })
+
+    const ask = document.getElementById('ask')
+
+    ask.onclick = () => socket.emit('sonar', {})
   </script>
 </body>
 

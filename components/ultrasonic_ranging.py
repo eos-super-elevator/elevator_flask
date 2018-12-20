@@ -69,3 +69,12 @@ def loop_during(looptime, interval=1):
         looptime = looptime - interval
         time.sleep(interval)
     GPIO.cleanup()
+
+def get_distance():
+    """ Get sonar distance now
+    """
+    setup()
+    GPIO.setup(11,GPIO.IN)
+    distance = getSonar()
+    GPIO.cleanup()
+    return distance
