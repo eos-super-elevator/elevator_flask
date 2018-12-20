@@ -2,10 +2,14 @@
 
 A Python Flask web server to master some Raspberry PI components. This server expose some routes:
 
-- GET `/lcd/display/<content>`
-- GET `/led/blink`
 
-Also this use [Socket.io][socketio] & [Flask-Socket.io][flask-socketio] to produce realtime stuffs.
+- GET `/lcd/display/<content>` to display a message on the LCD screen
+- GET `/led/blink` to make LED blink
+- GET `/sonar/run/<int:time>` to get distance on sonar during some time (response on "sonar" socket)
+
+Also this use [Socket.io][socketio] & [Flask-Socket.io][flask-socketio] to produce realtime stuffs. You can make theses SOCKET queries
+
+- `sonar` to get distance (response on `sonar` socket)
 
 ## Components used on Raspberry PI
 

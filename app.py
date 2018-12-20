@@ -19,13 +19,13 @@ def hello():
     <ul>
       <li>GET <a href="/lcd/display/helloworld">/lcd/display/<content></a> to display a message on the LCD screen</li>
       <li>GET <a href="/led/blink">/led/blink</a> to make LED blink</li>
-      <li>GET <a href="/sonar/run">/sonar/run/<int:time></a> to get distnace on sonar during some time (response on "sonar" socket)</li>
+      <li>GET <a href="/sonar/run">/sonar/run/<int:time></a> to get distance on sonar during some time (response on "sonar" socket)</li>
     </ul>
 
     <p>You can also make theses SOCKET queries</p>
 
     <ul>
-        <li><code></code></li>
+        <li><code>sonar</code> to get distance (response on "sonar" socket)</li>
     </ul>
     """
     return Response(content, mimetype='text/html')
